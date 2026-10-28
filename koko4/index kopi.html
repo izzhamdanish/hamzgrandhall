@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="ms" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kopi Santai - Kedai Kopi Interaktif</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Plus Jakarta Sans & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Config Tailwind Theme -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        espresso: '#2C1810',
+                        roast: '#3D2314',
+                        caramel: '#C87D55',
+                        latte: '#E8D2C0',
+                        foam: '#FDF8F5',
+                        goldAccent: '#D4AF37',
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- External CSS File -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-foam text-espresso font-sans selection:bg-caramel selection:text-white antialiased">
+
+    <!-- NAVIGATION BAR -->
+    <nav class="fixed top-0 left-0 w-full z-40 bg-foam/90 backdrop-blur-md border-b border-caramel/10 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-full bg-espresso text-foam flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+                    <i class="fa-solid font-bold fa-mug-hot text-xl text-caramel"></i>
+                </div>
+                <div>
+                    <span class="font-serif text-2xl font-bold tracking-tight text-espresso block leading-none">Kopi Santai</span>
+                    <span class="text-[10px] tracking-widest uppercase text-caramel font-semibold">Artisan Coffee House</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu Links -->
+            <div class="hidden md:flex items-center gap-8 font-medium text-sm">
+                <a href="#menu" class="hover:text-caramel transition-colors">Menu</a>
+                <a href="#builder" class="hover:text-caramel transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-wand-magic-sparkles text-goldAccent"></i> Bina Kopi
+                </a>
+                <a href="#quiz" class="hover:text-caramel transition-colors">Cari Kopi Idaman</a>
+                <a href="#reviews" class="hover:text-caramel transition-colors">Ulasan</a>
+                <a href="#reservation" class="hover:text-caramel transition-colors">Tempahan</a>
+            </div>
+
+            <!-- Action Buttons (Cart & Mobile Toggle) -->
+            <div class="flex items-center gap-4">
+                <button onclick="toggleCartDrawer()" class="relative bg-espresso text-foam px-4 py-2.5 rounded-full flex items-center gap-2.5 hover:bg-roast transition-all shadow-md hover:shadow-lg active:scale-95">
+                    <i class="fa-solid fa-basket-shopping text-caramel"></i>
+                    <span class="text-xs font-semibold uppercase tracking-wider hidden sm:inline">Troli</span>
+                    <span id="cart-badge" class="bg-caramel text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center -mr-1">0</span>
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden text-espresso p-2 text-xl focus:outline-none">
+                    <i class="fa-solid fa-bars" id="mobile-menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-foam border-b border-caramel/10 px-6 py-4 space-y-3 font-medium text-sm">
+            <a href="#menu" onclick="toggleMobileMenu()" class="block py-2 hover:text-caramel">Menu</a>
+            <a href="#builder" onclick="toggleMobileMenu()" class="block py-2 hover:text-caramel text-caramel font-semibold">✨ Bina Kopi Sendiri</a>
+            <a href="#quiz" onclick="toggleMobileMenu()" class="block py-2 hover:text-caramel">Kuiz Kopi Idaman</a>
+            <a href="#reviews" onclick="toggleMobileMenu()" class="block py-2 hover:text-caramel">Ulasan Pelanggan</a>
+            <a href="#reservation" onclick="toggleMobileMenu()" class="block py-2 hover:text-caramel">Tempahan Meja</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="relative min-h-screen pt-28 pb-16 flex items-center justify-center overflow-hidden bg-gradient-to-b from-foam via-latte/30 to-foam">
+        <!-- Background Elements -->
+        <div class="absolute top-20 -left-20 w-96 h-96 bg-caramel/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 -right-20 w-96 h-96 bg-goldAccent/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center relative z-10">
+            <div class="space-y-6 text-center md:text-left">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-caramel/10 border border-caramel/20 text-caramel text-xs font-semibold tracking-wide">
+                    <i class="fa-solid fa-sparkles"></i> Pengalaman Kopi Digital Terkini
+                </div>
+                <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-espresso leading-tight">
+                    Aroma Kopi Sebenar, <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-caramel to-roast">Dicipta Untuk Anda.</span>
+                </h1>
+                <p class="text-espresso/80 text-base sm:text-lg max-w-xl font-light leading-relaxed">
+                    Nikmati kehangatan dan kesegaran biji kopi artisan premium. Pesan secara interaktif, bina resipi tersendiri, atau cari perisa kopi yang padu mengikut cita rasa anda.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start pt-2">
+                    <a href="#menu" class="w-full sm:w-auto bg-espresso text-foam px-8 py-3.5 rounded-full font-semibold hover:bg-roast shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 text-center">
+                        Lihat Menu Interaktif
+                    </a>
+                    <a href="#builder" class="w-full sm:w-auto bg-white/80 border border-caramel/30 text-espresso px-8 py-3.5 rounded-full font-semibold hover:bg-latte/50 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-flask text-caramel"></i> Bina Kopi Sendiri
+                    </a>
+                </div>
+
+                <!-- Features Mini Badge -->
+                <div class="pt-6 grid grid-cols-3 gap-4 border-t border-caramel/10 text-center md:text-left">
+                    <div>
+                        <span class="block font-serif text-2xl font-bold text-espresso">100%</span>
+                        <span class="text-xs text-espresso/70">Arabica Premium</span>
+                    </div>
+                    <div>
+                        <span class="block font-serif text-2xl font-bold text-espresso">15+</span>
+                        <span class="text-xs text-espresso/70">Pilihan Resipi</span>
+                    </div>
+                    <div>
+                        <span class="block font-serif text-2xl font-bold text-espresso">4.9★</span>
+                        <span class="text-xs text-espresso/70">Ulasan Pelanggan</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Visual Canvas / Animated Cup -->
+            <div class="relative flex justify-center items-center">
+                <div class="w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full bg-gradient-to-tr from-caramel/20 to-goldAccent/20 flex items-center justify-center relative p-8 shadow-2xl backdrop-blur-sm border border-white/40">
+                    <!-- Steam Animations -->
+                    <div class="absolute -top-6 flex gap-4 text-caramel/40">
+                        <i class="fa-solid fa-wave-square coffee-steam text-2xl"></i>
+                        <i class="fa-solid fa-wave-square coffee-steam text-3xl delay-300"></i>
+                        <i class="fa-solid fa-wave-square coffee-steam text-xl delay-700"></i>
+                    </div>
+
+                    <!-- Coffee Visual Card -->
+                    <div class="glass-card w-full h-full rounded-3xl p-6 flex flex-col justify-between items-center text-center shadow-inner relative overflow-hidden border border-white">
+                        <div class="absolute -right-8 -top-8 w-24 h-24 bg-caramel/20 rounded-full blur-xl"></div>
+                        <span class="text-xs uppercase tracking-widest text-caramel font-bold">Pilihan Utama Hari Ini</span>
+                        
+                        <div class="w-32 h-32 rounded-full bg-espresso/10 p-2 my-2 flex items-center justify-center shadow-md">
+                            <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=400&q=80" alt="Iced Caramel Latte" class="w-full h-full object-cover rounded-full">
+                        </div>
+
+                        <div>
+                            <h3 class="font-serif font-bold text-lg text-espresso">Iced Caramel Latte</h3>
+                            <p class="text-xs text-espresso/70 mt-1">Espresso, Susu Segar, Sirap Karamel & Ais</p>
+                        </div>
+                        <span class="font-bold text-caramel text-base">RM 13.90</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 1: MENU INTERAKTIF -->
+    <section id="menu" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <span class="text-xs uppercase tracking-widest text-caramel font-bold">Nikmati Kesegaran</span>
+            <h2 class="font-serif text-3xl sm:text-4xl font-bold text-espresso mt-2">Menu Sajian Kopi & Pastri</h2>
+            <p class="text-espresso/70 text-sm mt-2">Pilih minuman atau makanan kegemaran anda untuk membuat pesanan secara kustom.</p>
+            
+            <!-- Category Filters -->
+            <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mt-8">
+                <button onclick="filterMenu('all')" class="menu-filter-btn active bg-espresso text-foam px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all">Semua</button>
+                <button onclick="filterMenu('espresso')" class="menu-filter-btn bg-white border border-caramel/20 text-espresso hover:bg-latte/40 px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all">Kopi Hot / Espresso</button>
+                <button onclick="filterMenu('cold')" class="menu-filter-btn bg-white border border-caramel/20 text-espresso hover:bg-latte/40 px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all">Kopi Sejuk / Cold Brew</button>
+                <button onclick="filterMenu('non-coffee')" class="menu-filter-btn bg-white border border-caramel/20 text-espresso hover:bg-latte/40 px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all">Bukan Kopi & Teh</button>
+                <button onclick="filterMenu('pastry')" class="menu-filter-btn bg-white border border-caramel/20 text-espresso hover:bg-latte/40 px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all">Pastri & Snek</button>
+            </div>
+        </div>
+
+        <!-- Menu Grid -->
+        <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Menu Cards will be dynamically populated by JS -->
+        </div>
+    </section>
+
+    <!-- SECTION 2: BINA RESIPI KOPI SENDIRI (Interactive Coffee Builder) -->
+    <section id="builder" class="py-20 bg-espresso text-foam relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs uppercase tracking-widest text-goldAccent font-bold">Makmal Kopi Digital</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-foam mt-2">Bina Resipi Kopi Sendiri</h2>
+                <p class="text-foam/70 text-sm mt-2">Pilih cecair base, jenis susu, perisa sirap, dan topping kegemaran anda secara langsung.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-10 items-center">
+                <!-- Controls / Steps (7 cols) -->
+                <div class="lg:col-span-7 space-y-6">
+                    
+                    <!-- Step 1: Base -->
+                    <div class="bg-roast/60 p-5 rounded-2xl border border-goldAccent/10">
+                        <label class="block text-xs uppercase font-bold tracking-wider text-goldAccent mb-3">1. Pilih Base Minuman</label>
+                        <div class="grid grid-cols-3 gap-3" id="builder-base">
+                            <button onclick="selectBuilderOption('base', 'espresso', 7.00, 'Single Espresso', '#3D2314')" class="builder-opt active p-3 rounded-xl border border-goldAccent/30 bg-goldAccent/10 text-left hover:border-goldAccent transition-all">
+                                <span class="block font-bold text-sm">Espresso</span>
+                                <span class="text-[11px] text-foam/60">RM 7.00</span>
+                            </button>
+                            <button onclick="selectBuilderOption('base', 'double_espresso', 9.00, 'Double Shot Espresso', '#2C1810')" class="builder-opt p-3 rounded-xl border border-white/10 bg-white/5 text-left hover:border-goldAccent transition-all">
+                                <span class="block font-bold text-sm">Double Shot</span>
+                                <span class="text-[11px] text-foam/60">RM 9.00</span>
+                            </button>
+                            <button onclick="selectBuilderOption('base', 'matcha', 8.50, 'Matcha Green Tea', '#4A6B35')" class="builder-opt p-3 rounded-xl border border-white/10 bg-white/5 text-left hover:border-goldAccent transition-all">
+                                <span class="block font-bold text-sm">Matcha Base</span>
+                                <span class="text-[11px] text-foam/60">RM 8.50</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Milk -->
+                    <div class="bg-roast/60 p-5 rounded-2xl border border-goldAccent/10">
+                        <label class="block text-xs uppercase font-bold tracking-wider text-goldAccent mb-3">2. Pilih Jenis Susu</label>
+                        <div class="grid grid-cols-3 gap-3" id="builder-milk">
+                            <button onclick="selectBuilderOption('milk', 'fresh', 2.00, 'Susu Segar', '#FDF8F5')" class="builder-opt active p-3 rounded-xl border border-goldAccent/30 bg-goldAccent/10 text-left hover:border-goldAccent transition-all">
+                                <span class="block font-bold text-sm">Susu Segar</span>
+                                <span class="text-[11px] text-foam/60">+RM 2.00</span>
+                            </button>
+                            <button onclick="selectBuilderOption('milk', 'oat', 3.50, 'Susu Oat (Oat Milk)', '#E6D7C3')" class="builder-opt p-3 rounded-xl border border-white/10 bg-white/5 text-left hover:border-goldAccent transition-all">
+                                <span class="block font-bold text-sm">Susu Oat</span>
+                                <span class="text-[11px] text-foam/60">+RM 3.50</span>
+                            </button>
+                            <button onclick="selectBuilderOption('milk', 'almond', 3.00, 'Susu Badam', '#EAD8C0')" class="builder-opt p-3 rounded-xl border border-white/10 bg-white/5 text-left hover:border-goldAccent transition-all">
+                                <span class="block font-bold text-sm">Susu Badam</span>
+                                <span class="text-[11px] text-foam/60">+RM 3.00</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Syrup -->
+                    <div class="bg-roast/60 p-5 rounded-2xl border border-goldAccent/10">
+                        <label class="block text-xs uppercase font-bold tracking-wider text-goldAccent mb-3">3. Perisa Sirap (Pilihan)</label>
+                        <div class="grid grid-cols-3 gap-3" id="builder-syrup">
+                            <button onclick="selectBuilderOption('syrup', 'none', 0.00, 'Tiada Sirap', 'transparent')" class="builder-opt active p-3 rounded-xl border border-goldAccent/30 bg-goldAccent/10 text-left hover:border-goldAccent transition-all">
+                                <span class="block font-bold text-sm">Tiada Sirap</span>
+                                <span class="text-[11px] text-foam/60">RM 0.00</span>
+                            </button>
+                            <button onclick="selectBuilderOption('syrup', 'caramel', 1.50, 'Sirap Karamel', '#C87D55')" class="builder-opt p-3 rounded-xl border border-white/10 bg-white/5 text-left hover:border-goldAccent transition-all">
+                                <span class="block font-bold text-sm">Karamel</span>
+                                <span class="text-[11px] text-foam/60">+RM 1.50</span>
+                            </button>
+                            <button onclick="selectBuilderOption('syrup', 'vanilla', 1.50, 'Sirap Vanila', '#F3E5AB')" class="builder-opt p-3 rounded-xl border border-white/10 bg-white/5 text-left hover:border-goldAccent transition-all">
+                                <span class="block font-bold text-sm">Vanila</span>
+                                <span class="text-[11px] text-foam/60">+RM 1.50</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Toppings -->
+                    <div class="bg-roast/60 p-5 rounded-2xl border border-goldAccent/10">
+                        <label class="block text-xs uppercase font-bold tracking-wider text-goldAccent mb-3">4. Topping Tambahan</label>
+                        <div class="grid grid-cols-3 gap-3" id="builder-topping">
+                            <button onclick="selectBuilderOption('topping', 'none', 0.00, 'Tiada Topping', '')" class="builder-opt active p-3 rounded-xl border border-goldAccent/30 bg-goldAccent/10 text-left hover:border-goldAccent transition-all">
+                                <span class="block font-bold text-sm">Tiada</span>
+                                <span class="text-[11px] text-foam/60">RM 0.00</span>
+                            </button>
+                            <button onclick="selectBuilderOption('topping', 'boba', 2.00, 'Boba Tapioka', '')" class="builder-opt p-3 rounded-xl border border-white/10 bg-white/5 text-left hover:border-goldAccent transition-all">
+                                <span class="block font-bold text-sm">Boba Black Pearl</span>
+                                <span class="text-[11px] text-foam/60">+RM 2.00</span>
+                            </button>
+                            <button onclick="selectBuilderOption('topping', 'whipped', 2.00, 'Whipped Cream', '')" class="builder-opt p-3 rounded-xl border border-white/10 bg-white/5 text-left hover:border-goldAccent transition-all">
+                                <span class="block font-bold text-sm">Whipped Cream</span>
+                                <span class="text-[11px] text-foam/60">+RM 2.00</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Visual Preview Cup (5 cols) -->
+                <div class="lg:col-span-5 flex flex-col items-center justify-center bg-roast/40 p-8 rounded-3xl border border-goldAccent/20">
+                    <span class="text-xs uppercase font-semibold text-goldAccent tracking-widest mb-4">Visual Minuman Ciptaan Anda</span>
+
+                    <!-- Transparent Cup Animation container -->
+                    <div class="relative w-48 h-64 border-4 border-white/40 border-t-0 rounded-b-3xl bg-white/5 overflow-hidden flex flex-col justify-end p-1 shadow-2xl backdrop-blur-sm">
+                        <!-- Topping Layer (Top) -->
+                        <div id="cup-layer-topping" class="h-0 transition-all duration-500 text-center text-xs text-black font-bold flex items-center justify-center bg-amber-100/80 rounded-t-lg"></div>
+                        <!-- Syrup Layer -->
+                        <div id="cup-layer-syrup" class="h-0 liquid-fill w-full"></div>
+                        <!-- Milk Layer -->
+                        <div id="cup-layer-milk" class="h-[50%] liquid-fill w-full bg-foam"></div>
+                        <!-- Base Layer (Bottom) -->
+                        <div id="cup-layer-base" class="h-[35%] liquid-fill w-full bg-[#3D2314]"></div>
+                    </div>
+
+                    <!-- Live Recipe Summary -->
+                    <div class="mt-6 text-center space-y-1">
+                        <h4 id="builder-custom-title" class="font-serif text-lg font-bold text-goldAccent">Custom Kopi Santai</h4>
+                        <p id="builder-custom-desc" class="text-xs text-foam/70 max-w-xs">Espresso + Susu Segar</p>
+                        <div class="text-2xl font-bold text-foam mt-3" id="builder-total-price">RM 9.00</div>
+                    </div>
+
+                    <button onclick="addCustomCoffeeToCart()" class="mt-6 w-full bg-goldAccent text-espresso font-bold py-3.5 rounded-full hover:bg-yellow-400 transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-cart-plus"></i> Tambah Ciptaan Ke Troli
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: KUIZ CARI KOPI IDAMAN -->
+    <section id="quiz" class="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+        <div class="glass-card rounded-3xl p-8 sm:p-12 border border-caramel/20 shadow-xl relative overflow-hidden">
+            <div class="text-center max-w-xl mx-auto mb-8">
+                <span class="text-xs uppercase tracking-widest text-caramel font-bold">Pembantu Kopi Pintar</span>
+                <h2 class="font-serif text-3xl font-bold text-espresso mt-1">Cari Kopi Idaman Anda ☕</h2>
+                <p class="text-xs sm:text-sm text-espresso/70 mt-1">Jawab 3 soalan ringkas dan kami akan syorkan minuman terbaik untuk mood anda!</p>
+            </div>
+
+            <!-- Quiz Wizard Box -->
+            <div id="quiz-container" class="max-w-xl mx-auto">
+                <!-- Question 1 -->
+                <div id="quiz-q1" class="quiz-step space-y-4">
+                    <h3 class="font-semibold text-base text-center">1. Bagaimana anda suka tahap rasa kopi anda?</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="answerQuiz(1, 'strong')" class="p-4 rounded-2xl border border-caramel/20 hover:border-caramel hover:bg-latte/30 transition-all text-center">
+                            <i class="fa-solid fa-bolt text-2xl text-caramel mb-2 block"></i>
+                            <span class="font-bold text-sm block">Kuat & Pehat</span>
+                            <span class="text-[11px] text-espresso/60">Rasa espresso sebenar</span>
+                        </button>
+                        <button onclick="answerQuiz(1, 'sweet')" class="p-4 rounded-2xl border border-caramel/20 hover:border-caramel hover:bg-latte/30 transition-all text-center">
+                            <i class="fa-solid fa-cookie-bite text-2xl text-caramel mb-2 block"></i>
+                            <span class="font-bold text-sm block">Manis & Lembut</span>
+                            <span class="text-[11px] text-espresso/60">Rasa berkrim dan manis</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div id="quiz-q2" class="quiz-step hidden space-y-4">
+                    <h3 class="font-semibold text-base text-center">2. Suhu minuman pilihan anda hari ini?</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="answerQuiz(2, 'hot')" class="p-4 rounded-2xl border border-caramel/20 hover:border-caramel hover:bg-latte/30 transition-all text-center">
+                            <i class="fa-solid fa-temperature-high text-2xl text-red-500 mb-2 block"></i>
+                            <span class="font-bold text-sm block">Panas (Hot)</span>
+                            <span class="text-[11px] text-espresso/60">Menenangkan & suam</span>
+                        </button>
+                        <button onclick="answerQuiz(2, 'cold')" class="p-4 rounded-2xl border border-caramel/20 hover:border-caramel hover:bg-latte/30 transition-all text-center">
+                            <i class="fa-solid fa-snowflake text-2xl text-blue-400 mb-2 block"></i>
+                            <span class="font-bold text-sm block">Sejuk Berais (Iced)</span>
+                            <span class="text-[11px] text-espresso/60">Menyegarkan dahaga</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div id="quiz-q3" class="quiz-step hidden space-y-4">
+                    <h3 class="font-semibold text-base text-center">3. Adakah anda sukakan kandungan susu?</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="answerQuiz(3, 'milk')" class="p-4 rounded-2xl border border-caramel/20 hover:border-caramel hover:bg-latte/30 transition-all text-center">
+                            <i class="fa-solid fa-glass-water text-2xl text-caramel mb-2 block"></i>
+                            <span class="font-bold text-sm block">Ya, Banyak Susu</span>
+                            <span class="text-[11px] text-espresso/60">Tekstur Berkrim</span>
+                        </button>
+                        <button onclick="answerQuiz(3, 'black')" class="p-4 rounded-2xl border border-caramel/20 hover:border-caramel hover:bg-latte/30 transition-all text-center">
+                            <i class="fa-solid fa-mug-hot text-2xl text-espresso mb-2 block"></i>
+                            <span class="font-bold text-sm block">Tanpa Susu (Kopi Hitam)</span>
+                            <span class="text-[11px] text-espresso/60">Semula jadi & Ringkas</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Result -->
+                <div id="quiz-result" class="hidden text-center space-y-4">
+                    <div class="inline-block p-4 rounded-full bg-caramel/10 text-caramel text-3xl mb-2">🎉</div>
+                    <h3 class="font-serif text-2xl font-bold text-espresso">Cadangan Kopi Sempurna Anda:</h3>
+                    
+                    <div id="quiz-recommended-card" class="bg-white p-6 rounded-2xl shadow-md border border-caramel/20 max-w-sm mx-auto">
+                        <!-- Filled by JS -->
+                    </div>
+
+                    <button onclick="resetQuiz()" class="text-xs text-caramel underline font-semibold hover:text-espresso">Ulang Kuiz Semula</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: REVIEWS & FEEDBACK -->
+    <section id="reviews" class="py-20 bg-latte/20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-xl mx-auto mb-12">
+                <span class="text-xs uppercase tracking-widest text-caramel font-bold">Kata Pelanggan</span>
+                <h2 class="font-serif text-3xl font-bold text-espresso mt-1">Ulasan & Suara Santai</h2>
+            </div>
+
+            <!-- Review Cards Grid -->
+            <div class="grid md:grid-cols-3 gap-6 mb-12" id="reviews-container">
+                <div class="glass-card p-6 rounded-2xl border border-caramel/10 shadow-sm">
+                    <div class="flex items-center gap-1 text-goldAccent text-xs mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-xs sm:text-sm text-espresso/80 italic mb-4">"Spanish Latte sejuk kat sini memang terpaling sedap! Suasana kedai pun sangat cozy untuk buat kerja."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-caramel text-white font-bold flex items-center justify-center text-xs">AH</div>
+                        <div>
+                            <h4 class="font-bold text-xs text-espresso">Aiman Hakim</h4>
+                            <span class="text-[10px] text-espresso/50">Pelanggan Setia</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl border border-caramel/10 shadow-sm">
+                    <div class="flex items-center gap-1 text-goldAccent text-xs mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-xs sm:text-sm text-espresso/80 italic mb-4">"Fitur Bina Kopi Sendiri kat laman web ni sangat interaktif! Saya siap boleh pilih susu Oat & tahap manis."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-roast text-white font-bold flex items-center justify-center text-xs">SN</div>
+                        <div>
+                            <h4 class="font-bold text-xs text-espresso">Siti Nurhaliza</h4>
+                            <span class="text-[10px] text-espresso/50">Penggemar Kopi Oat</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl border border-caramel/10 shadow-sm">
+                    <div class="flex items-center gap-1 text-goldAccent text-xs mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-xs sm:text-sm text-espresso/80 italic mb-4">"Croissant Mentega mereka garing di luar & lembut di dalam. Sangat ngam dipadankan dengan Americano panas."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-goldAccent text-espresso font-bold flex items-center justify-center text-xs">KL</div>
+                        <div>
+                            <h4 class="font-bold text-xs text-espresso">Kevin Lee</h4>
+                            <span class="text-[10px] text-espresso/50">Foodie Food Guide</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feedback Form Modal/Box -->
+            <div class="max-w-lg mx-auto bg-white p-6 rounded-2xl shadow-md border border-caramel/15">
+                <h3 class="font-bold text-sm text-espresso mb-3 text-center">Tinggalkan Ulasan Anda</h3>
+                <form onsubmit="handleReviewSubmit(event)" class="space-y-3">
+                    <div>
+                        <input type="text" id="review-name" required placeholder="Nama Anda" class="w-full text-xs p-3 rounded-xl border border-caramel/20 focus:outline-none focus:border-caramel">
+                    </div>
+                    <div>
+                        <textarea id="review-comment" required placeholder="Tulis ulasan ringkas mengenai kopi kami..." rows="3" class="w-full text-xs p-3 rounded-xl border border-caramel/20 focus:outline-none focus:border-caramel"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-espresso text-foam py-2.5 rounded-xl font-bold text-xs hover:bg-roast transition-all">Hantar Ulasan</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: TEMPAHAN MEJA & LOKASI -->
+    <section id="reservation" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            
+            <!-- Reservation Form -->
+            <div class="bg-white p-8 rounded-3xl shadow-xl border border-caramel/15">
+                <span class="text-xs uppercase tracking-widest text-caramel font-bold">Tempahan Meja awal</span>
+                <h2 class="font-serif text-3xl font-bold text-espresso mt-1 mb-6">Tempah Ruang Santai Anda</h2>
+
+                <form onsubmit="handleReservationSubmit(event)" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-espresso/70 mb-1">Nama Penuh</label>
+                            <input type="text" required placeholder="Ahmad" class="w-full text-xs p-3 rounded-xl border border-caramel/20 focus:border-caramel focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-espresso/70 mb-1">Nombor Telefon</label>
+                            <input type="tel" required placeholder="012-3456789" class="w-full text-xs p-3 rounded-xl border border-caramel/20 focus:border-caramel focus:outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-espresso/70 mb-1">Tarikh</label>
+                            <input type="date" required class="w-full text-xs p-2.5 rounded-xl border border-caramel/20 focus:border-caramel focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-espresso/70 mb-1">Masa</label>
+                            <input type="time" required class="w-full text-xs p-2.5 rounded-xl border border-caramel/20 focus:border-caramel focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-espresso/70 mb-1">Bil. Pax</label>
+                            <select class="w-full text-xs p-2.5 rounded-xl border border-caramel/20 focus:border-caramel focus:outline-none">
+                                <option>1 Person</option>
+                                <option>2 People</option>
+                                <option>3-4 People</option>
+                                <option>5+ People</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-espresso/70 mb-1">Nota Khas / Permintaan</label>
+                        <textarea placeholder="Contoh: Meja berdekatan tingkap / plug point" rows="2" class="w-full text-xs p-3 rounded-xl border border-caramel/20 focus:border-caramel focus:outline-none"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-caramel text-white py-3 rounded-xl font-bold text-sm hover:bg-roast transition-all shadow-md">
+                        Sahkan Tempahan Meja
+                    </button>
+                </form>
+            </div>
+
+            <!-- Location & Hours Info -->
+            <div class="space-y-6">
+                <div>
+                    <span class="text-xs uppercase tracking-widest text-caramel font-bold">Lokasi Kami</span>
+                    <h2 class="font-serif text-3xl font-bold text-espresso mt-1">Singgah Ke Kafe Kami</h2>
+                    <p class="text-xs sm:text-sm text-espresso/70 mt-2">Suasana tenang sesuai untuk santai, bekerja, atau beramah mesra bersama rakan-rakan.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex items-start gap-4 p-4 rounded-2xl bg-foam border border-caramel/10">
+                        <div class="w-10 h-10 rounded-full bg-caramel/20 text-caramel flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm text-espresso">Alamat</h4>
+                            <p class="text-xs text-espresso/70">No 12, Jalan Telawi 3, Bangsar, 59100 Kuala Lumpur, Malaysia</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-4 rounded-2xl bg-foam border border-caramel/10">
+                        <div class="w-10 h-10 rounded-full bg-caramel/20 text-caramel flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm text-espresso">Waktu Operasi</h4>
+                            <p class="text-xs text-espresso/70">Isnin - Jumaat: 8:00 AM - 10:00 PM</p>
+                            <p class="text-xs text-espresso/70">Sabtu - Ahad: 8:00 AM - 11:00 PM</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-4 rounded-2xl bg-foam border border-caramel/10">
+                        <div class="w-10 h-10 rounded-full bg-caramel/20 text-caramel flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm text-espresso">Hubungi Kami</h4>
+                            <p class="text-xs text-espresso/70">+60 3-8921 4455 / hello@kopisantai.my</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-espresso text-foam pt-12 pb-8 border-t border-goldAccent/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-caramel flex items-center justify-center text-foam">
+                    <i class="fa-solid fa-mug-hot text-sm"></i>
+                </div>
+                <span class="font-serif font-bold text-lg">Kopi Santai</span>
+            </div>
+            <p class="text-xs text-foam/60">© 2026 Kopi Santai Artisan House. Hak Cipta Terelihara.</p>
+            <div class="flex gap-4 text-foam/80 text-sm">
+                <a href="#" class="hover:text-goldAccent"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-goldAccent"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="hover:text-goldAccent"><i class="fa-brands fa-tiktok"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL CUSTOMIZER MINUMAN (When clicking a Menu Item) -->
+    <div id="customizer-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-foam w-full max-w-md rounded-3xl p-6 shadow-2xl border border-caramel/20 relative animate-fade-in max-h-[90vh] overflow-y-auto">
+            <button onclick="closeCustomizerModal()" class="absolute top-4 right-4 text-espresso/50 hover:text-espresso p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="flex items-center gap-4 mb-4">
+                <img id="modal-img" src="" class="w-16 h-16 rounded-2xl object-cover shadow">
+                <div>
+                    <h3 id="modal-title" class="font-serif font-bold text-lg text-espresso"></h3>
+                    <p id="modal-base-price" class="text-xs text-caramel font-bold"></p>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Size Options -->
+                <div>
+                    <label class="block text-xs font-bold text-espresso uppercase mb-2">Pilih Saiz Cawan</label>
+                    <div class="grid grid-cols-3 gap-2" id="modal-sizes">
+                        <button onclick="selectModalOption('size', 'Small', 0)" class="modal-size-btn active p-2.5 text-xs rounded-xl border border-caramel bg-caramel/10 font-semibold text-center">Small</button>
+                        <button onclick="selectModalOption('size', 'Medium', 1.5)" class="modal-size-btn p-2.5 text-xs rounded-xl border border-caramel/20 font-semibold text-center">+ Medium (+RM1.50)</button>
+                        <button onclick="selectModalOption('size', 'Large', 2.5)" class="modal-size-btn p-2.5 text-xs rounded-xl border border-caramel/20 font-semibold text-center">+ Large (+RM2.50)</button>
+                    </div>
+                </div>
+
+                <!-- Sugar Level -->
+                <div>
+                    <label class="block text-xs font-bold text-espresso uppercase mb-2">Tahap Manis (Gula)</label>
+                    <div class="grid grid-cols-4 gap-1.5" id="modal-sugar">
+                        <button onclick="selectModalOption('sugar', '0% (Tanpa Gula)', 0)" class="modal-sugar-btn p-2 text-[11px] rounded-xl border border-caramel/20 font-semibold text-center">0%</button>
+                        <button onclick="selectModalOption('sugar', '30% (Less Sweet)', 0)" class="modal-sugar-btn p-2 text-[11px] rounded-xl border border-caramel/20 font-semibold text-center">30%</button>
+                        <button onclick="selectModalOption('sugar', '50% (Normal)', 0)" class="modal-sugar-btn active p-2 text-[11px] rounded-xl border border-caramel bg-caramel/10 font-semibold text-center">50%</button>
+                        <button onclick="selectModalOption('sugar', '100% (Extra Sweet)', 0)" class="modal-sugar-btn p-2 text-[11px] rounded-xl border border-caramel/20 font-semibold text-center">100%</button>
+                    </div>
+                </div>
+
+                <!-- Milk Option -->
+                <div>
+                    <label class="block text-xs font-bold text-espresso uppercase mb-2">Pilihan Susu</label>
+                    <select id="modal-milk-select" onchange="updateModalPrice()" class="w-full text-xs p-2.5 rounded-xl border border-caramel/20 focus:outline-none">
+                        <option value="Susu Segar|0">Susu Segar Standard (RM 0.00)</option>
+                        <option value="Susu Oat|2.5">Susu Oat (+RM 2.50)</option>
+                        <option value="Susu Badam|2.0">Susu Badam (+RM 2.00)</option>
+                    </select>
+                </div>
+
+                <!-- Extra Topping -->
+                <div>
+                    <label class="block text-xs font-bold text-espresso uppercase mb-2">Tambahan Topping</label>
+                    <div class="space-y-1.5">
+                        <label class="flex items-center gap-2 text-xs">
+                            <input type="checkbox" id="top-boba" value="2.00" onchange="updateModalPrice()" class="accent-caramel"> Boba Tapioca Pearls (+RM 2.00)
+                        </label>
+                        <label class="flex items-center gap-2 text-xs">
+                            <input type="checkbox" id="top-shot" value="2.50" onchange="updateModalPrice()" class="accent-caramel"> Extra Espresso Shot (+RM 2.50)
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Total Modal Price & Add Button -->
+                <div class="pt-4 border-t border-caramel/10 flex items-center justify-between">
+                    <div>
+                        <span class="text-[10px] uppercase text-espresso/60">Jumlah Harga</span>
+                        <div id="modal-calculated-price" class="font-bold text-lg text-caramel">RM 0.00</div>
+                    </div>
+                    <button onclick="confirmAddToCartFromModal()" class="bg-espresso text-foam px-6 py-3 rounded-full font-bold text-xs hover:bg-roast shadow-lg">
+                        Tambah Ke Troli
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CART DRAWER / SIMULATOR BIL -->
+    <div id="cart-drawer" class="fixed inset-y-0 right-0 w-full max-w-md bg-foam shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-caramel/20">
+        <div class="p-5 bg-espresso text-foam flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-receipt text-goldAccent"></i>
+                <h3 class="font-serif font-bold text-base">Pesanan & Resit Santai</h3>
+            </div>
+            <button onclick="toggleCartDrawer()" class="text-foam/70 hover:text-white p-1">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Dine In / Takeaway toggle -->
+        <div class="p-4 bg-latte/30 border-b border-caramel/10 flex gap-2">
+            <button onclick="setOrderType('dine-in')" id="btn-dinein" class="flex-1 py-2 rounded-xl text-xs font-bold bg-caramel text-white shadow-sm">
+                <i class="fa-solid fa-utensils mr-1"></i> Makan Di Sini (Dine-In)
+            </button>
+            <button onclick="setOrderType('takeaway')" id="btn-takeaway" class="flex-1 py-2 rounded-xl text-xs font-bold bg-white text-espresso border border-caramel/20">
+                <i class="fa-solid fa-bag-shopping mr-1"></i> Bungkus (Takeaway)
+            </button>
+        </div>
+
+        <!-- Table Selection if Dine In -->
+        <div id="table-select-box" class="px-4 py-2 bg-foam border-b border-caramel/10 flex items-center justify-between text-xs">
+            <span class="font-semibold text-espresso/70">Pilih Meja:</span>
+            <select id="cart-table-no" class="p-1 rounded border border-caramel/20 text-xs font-bold">
+                <option value="Meja 01">Meja 01</option>
+                <option value="Meja 02">Meja 02</option>
+                <option value="Meja 03">Meja 03</option>
+                <option value="Meja 04">Meja 04 (Luas)</option>
+            </select>
+        </div>
+
+        <!-- Cart Items List Container -->
+        <div id="cart-items-list" class="flex-1 overflow-y-auto p-4 space-y-3">
+            <!-- Empty state default -->
+            <div class="text-center py-12 text-espresso/50 text-xs">
+                <i class="fa-solid fa-basket-shopping text-3xl mb-2 text-caramel/30 block"></i>
+                Troli anda masih kosong. Pilih minuman di menu!
+            </div>
+        </div>
+
+        <!-- Realtime Bill Calculation Footer -->
+        <div class="p-5 bg-white border-t border-caramel/15 space-y-2 text-xs">
+            <div class="flex justify-between text-espresso/70">
+                <span>Subtotal</span>
+                <span id="bill-subtotal">RM 0.00</span>
+            </div>
+            <div class="flex justify-between text-espresso/70">
+                <span>Cukai SST (6%)</span>
+                <span id="bill-tax">RM 0.00</span>
+            </div>
+            <div class="flex justify-between text-sm font-bold text-espresso pt-2 border-t border-dashed border-caramel/20">
+                <span>Jumlah Keseluruhan</span>
+                <span id="bill-total" class="text-caramel text-base">RM 0.00</span>
+            </div>
+
+            <button onclick="processCheckout()" class="w-full mt-3 bg-espresso text-foam py-3 rounded-xl font-bold hover:bg-roast transition-all shadow-md flex items-center justify-center gap-2">
+                <i class="fa-solid fa-check-circle text-goldAccent"></i> Hantar Pesanan
+            </button>
+        </div>
+    </div>
+
+    <!-- CUSTOM NOTIFICATION TOAST -->
+    <div id="toast-msg" class="fixed bottom-5 right-5 bg-espresso text-foam px-5 py-3 rounded-2xl shadow-2xl border border-goldAccent/30 z-50 transform translate-y-20 opacity-0 transition-all duration-300 text-xs flex items-center gap-3">
+        <i class="fa-solid fa-circle-check text-goldAccent text-base"></i>
+        <span id="toast-text">Item ditambah ke troli!</span>
+    </div>
+
+    <!-- External JavaScript File -->
+    <script src="script.js"></script>
+</body>
+</html>
