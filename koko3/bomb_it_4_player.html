@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bomb It 3 - 4 Player Edition</title>
+    <!-- Tailwind CSS for UI Overlay -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-950 text-white min-h-screen flex flex-col justify-between items-center p-2 select-none overflow-x-hidden font-['Nunito']">
+
+    <!-- Top Bar Header -->
+    <header class="w-full max-w-6xl flex justify-between items-center bg-slate-900/90 p-3 px-6 rounded-2xl border border-slate-800 shadow-xl mb-2">
+        <div class="flex items-center space-x-3">
+            <i class="fa-solid fa-bomb text-red-500 text-3xl animate-bounce"></i>
+            <div>
+                <h1 class="font-['Fredoka_One'] text-2xl tracking-wide bg-gradient-to-r from-amber-400 via-rose-500 to-indigo-400 bg-clip-text text-transparent">
+                    BOMB IT 3 <span class="text-xs px-2 py-0.5 rounded-full bg-indigo-600 text-white font-sans uppercase">4 Player</span>
+                </h1>
+                <p class="text-xs text-slate-400">Pertempuran Bom 4-Pemain 1 Skrin</p>
+            </div>
+        </div>
+
+        <!-- Timer Display -->
+        <div class="flex items-center bg-slate-950 px-4 py-2 rounded-xl border border-slate-800">
+            <i class="fa-regular fa-clock text-amber-400 mr-2 text-lg"></i>
+            <span id="timerDisplay" class="font-['Fredoka_One'] text-2xl text-amber-400">02:00</span>
+        </div>
+
+        <!-- Control Toggle & Reset -->
+        <div class="flex gap-2">
+            <button id="soundToggleBtn" onclick="toggleAudio()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition border border-slate-700">
+                <i id="soundIcon" class="fa-solid fa-volume-high"></i>
+            </button>
+            <button onclick="restartGame()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition shadow-lg shadow-indigo-600/30 flex items-center gap-1.5">
+                <i class="fa-solid fa-rotate-right"></i> Mula Semula
+            </button>
+        </div>
+    </header>
+
+    <!-- Player Status Cards -->
+    <div class="w-full max-w-6xl grid grid-cols-2 md:grid-cols-4 gap-2 mb-2">
+        <!-- P1 Card -->
+        <div id="p1Card" class="bg-slate-900/80 p-2.5 rounded-xl border-2 border-amber-500/70 flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-lg bg-amber-500/20 border border-amber-400 flex items-center justify-center font-['Fredoka_One'] text-amber-400 text-xl">
+                P1
+            </div>
+            <div class="flex-1 min-w-0">
+                <div class="flex justify-between items-center">
+                    <span class="font-bold text-xs text-amber-400 truncate">Kuning</span>
+                    <span id="p1Hearts" class="text-red-500 text-xs">❤️❤️❤️</span>
+                </div>
+                <div class="text-[10px] text-slate-400 truncate mt-0.5">WASD + Space</div>
+            </div>
+        </div>
+
+        <!-- P2 Card -->
+        <div id="p2Card" class="bg-slate-900/80 p-2.5 rounded-xl border-2 border-cyan-500/70 flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-lg bg-cyan-500/20 border border-cyan-400 flex items-center justify-center font-['Fredoka_One'] text-cyan-400 text-xl">
+                P2
+            </div>
+            <div class="flex-1 min-w-0">
+                <div class="flex justify-between items-center">
+                    <span class="font-bold text-xs text-cyan-400 truncate">Biru</span>
+                    <span id="p2Hearts" class="text-red-500 text-xs">❤️❤️❤️</span>
+                </div>
+                <div class="text-[10px] text-slate-400 truncate mt-0.5">Panah + Enter</div>
+            </div>
+        </div>
+
+        <!-- P3 Card -->
+        <div id="p3Card" class="bg-slate-900/80 p-2.5 rounded-xl border-2 border-rose-500/70 flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-lg bg-rose-500/20 border border-rose-400 flex items-center justify-center font-['Fredoka_One'] text-rose-400 text-xl">
+                P3
+            </div>
+            <div class="flex-1 min-w-0">
+                <div class="flex justify-between items-center">
+                    <span class="font-bold text-xs text-rose-400 truncate">Merah</span>
+                    <span id="p3Hearts" class="text-red-500 text-xs">❤️❤️❤️</span>
+                </div>
+                <div class="text-[10px] text-slate-400 truncate mt-0.5">IJKL + Semicolon(;)</div>
+            </div>
+        </div>
+
+        <!-- P4 Card -->
+        <div id="p4Card" class="bg-slate-900/80 p-2.5 rounded-xl border-2 border-emerald-500/70 flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-lg bg-emerald-500/20 border border-emerald-400 flex items-center justify-center font-['Fredoka_One'] text-emerald-400 text-xl">
+                P4
+            </div>
+            <div class="flex-1 min-w-0">
+                <div class="flex justify-between items-center">
+                    <span class="font-bold text-xs text-emerald-400 truncate">Hijau</span>
+                    <span id="p4Hearts" class="text-red-500 text-xs">❤️❤️❤️</span>
+                </div>
+                <div class="text-[10px] text-slate-400 truncate mt-0.5">TFGH + B / Numpad</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Game Canvas Container -->
+    <main class="relative flex-1 flex items-center justify-center w-full max-w-6xl my-auto">
+        <canvas id="gameCanvas" class="rounded-2xl border-4 border-slate-800 shadow-2xl bg-slate-900"></canvas>
+
+        <!-- Game Over / Victory Modal Overlay -->
+        <div id="victoryOverlay" class="absolute inset-0 bg-slate-950/85 backdrop-blur-md rounded-2xl hidden flex-col items-center justify-center z-20 transition-all">
+            <div class="bg-slate-900 p-8 rounded-3xl border border-slate-700 max-w-md w-full text-center shadow-2xl space-y-4">
+                <div class="text-5xl" id="winnerEmoji">🏆</div>
+                <h2 id="winnerText" class="font-['Fredoka_One'] text-3xl text-amber-400">PEMAIN 1 MENANG!</h2>
+                <p id="winnerSub" class="text-slate-300 text-sm">Menghapuskan semua pihak lawan dalam arena!</p>
+                <div class="pt-4">
+                    <button onclick="restartGame()" class="w-full py-3 bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-400 hover:to-rose-400 text-slate-950 font-['Fredoka_One'] text-xl rounded-xl shadow-lg transition transform hover:scale-105">
+                        MAIN LAGI!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Controls Reference Footer -->
+    <footer class="w-full max-w-6xl mt-2 bg-slate-900/60 p-2.5 rounded-xl border border-slate-800/80 text-xs text-slate-400 flex flex-wrap justify-between gap-2 items-center">
+        <div class="flex items-center gap-2">
+            <span class="font-bold text-amber-400">POWER-UPS:</span>
+            <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">💣 Bom Extra</span>
+            <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300">🔥 Jarak Api</span>
+            <span class="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300">⚡ Laju</span>
+            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">🛡️ Pelindung</span>
+        </div>
+        <div class="text-slate-500">
+            Dinaik taraf untuk peranti skrin penuh / laptop.
+        </div>
+    </footer>
+
+    <!-- Game Engine Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
